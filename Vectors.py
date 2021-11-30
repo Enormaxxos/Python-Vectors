@@ -126,13 +126,24 @@ class Vector:
 
         return True
 
+    def setHeadingDeg(self, angle):
+        m = self.mag()
+        angle = degToRad(angle)
+        self.x = cos(angle)
+        self.y = sin(angle)
+
+        return True
+
     def rotate(self, angle):
-        try:
-            newAngle = self.heading("rad") + angle
-            self.setHeading(newAngle)
-        except:
-            print("something went wrong")
-            return False
+        newAngle = self.heading("rad") + angle
+        self.setHeading(newAngle)
+
+        return True
+
+    def rotateDeg(self,angle):
+        newAngle = self.heading("deg") + angle
+        self.setHeadingDeg(newAngle)
+
         return True
 
     def angleBetween(self, other, option=None):
@@ -145,21 +156,13 @@ class Vector:
             return radToDeg(acos(a / b))
 
     def dist(self, other):
-        try:
-            a = sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2)
-            return sqrt(a ** 2 + fabs(self.z - other.z) ** 2)
-        except:
-            print("something went wrong")
-            return False
+        return sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2 + fabs(self.z - other.z) ** 2)
 
-    def lerp(self, other, amount):
-        try:
-            self.x = self.x + (other.x - self.x) * amount
-            self.y = self.y + (other.y - self.y) * amount
-            self.z = self.z + (other.z - self.z) * amount
-        except:
-            print("something went wrong")
-            return False
+    def lerp(self, other, amt):
+        self.x = self.x + (other.x - self.x) * amt
+        self.y = self.y + (other.y - self.y) * amt
+        self.z = self.z + (other.z - self.z) * amt
+
         return True
 
     def random2D(self):
