@@ -66,7 +66,7 @@ class Vector:
 
     def cross(self, other):
         if self.z == 0 or other.z == 0:
-            print("Error: Only works for two 3D Vectors.")
+            print("Vector.cross() Error: Only works for two 3D Vectors.")
             return False
         else:
             a = self.y * other.z - self.z * other.y
@@ -75,30 +75,28 @@ class Vector:
             return Vector(a, b, c)
 
     def div(self, other):
-        try:
+        if other.x == 0 or other.y == 0 or other.z == 0:
+            print("Vector.div() Error: Division by zero.")
+            return False
+        else:
             self.x = self.x / other.x
             self.y = self.y / other.y
-            if other.z != 0:
-                self.z = self.z / other.z
-            else:
-                print("Error: Division by zero.")
-        except:
-            print("Something went wrong")
-            return False
-        return True
+            self.z = self.z / other.z
+            return True
 
     def mag(self):
         a = sqrt(self.x ** 2 + self.y ** 2)
         return sqrt(a ** 2 + self.z ** 2)
 
     def normalize(self):
-        try:
-            coef = self.mag()
-            self.coefMult(1 / coef)
-        except:
-            print("something went wrong")
+        coef = self.mag()
+        if coef == 0:
+            print("Vector.normalize() Error: Division by zero.")
             return False
-        return True
+        else:
+            self.coefMult(1 / coef)
+            return True
+
 
     def setMag(self, mag):
         try:
@@ -111,28 +109,21 @@ class Vector:
 
     def heading(self, option=None):
         if self.z != 0:
-            print("Error: Method Vector.heading() can only be used for 2D vectors.")
+            print("Vector.heading() Error: Method can only be used for 2D vectors.")
             return False
         else:
-            try:
-                final = atan2(self.y, self.x)
-                if option == "rad" or option is None:
-                    return final
-                elif option == "deg":
-                    return radToDeg(final)
-            except:
-                print("something went wrong")
-                return False
+            final = atan2(self.y, self.x)
+            if option == "rad" or option is None:
+                return final
+            elif option == "deg":
+                return radToDeg(final)
 
     def setHeading(self, angle):
-        try:
-            m = self.mag()
-            self.x = cos(angle)
-            self.y = sin(angle)
-            self.setMag(m)
-        except:
-            print("something went wrong")
-            return False
+        m = self.mag()
+        self.x = cos(angle)
+        self.y = sin(angle)
+        self.setMag(m)
+
         return True
 
     def rotate(self, angle):
