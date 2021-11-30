@@ -66,7 +66,7 @@ class Vector:
 
     def cross(self, other):
         if self.z == 0 or other.z == 0:
-            print("Error: Only works for two 3D Vectors.")
+            print("Vector.cross() Error: Only works for two 3D Vectors.")
             return False
         else:
             a = self.y * other.z - self.z * other.y
@@ -75,30 +75,28 @@ class Vector:
             return Vector(a, b, c)
 
     def div(self, other):
-        try:
+        if other.x == 0 or other.y == 0 or other.z == 0:
+            print("Vector.div() Error: Division by zero.")
+            return False
+        else:
             self.x = self.x / other.x
             self.y = self.y / other.y
-            if other.z != 0:
-                self.z = self.z / other.z
-            else:
-                print("Error: Division by zero.")
-        except:
-            print("Something went wrong")
-            return False
-        return True
+            self.z = self.z / other.z
+            return True
 
     def mag(self):
         a = sqrt(self.x ** 2 + self.y ** 2)
         return sqrt(a ** 2 + self.z ** 2)
 
     def normalize(self):
-        try:
-            coef = self.mag()
-            self.coefMult(1 / coef)
-        except:
-            print("something went wrong")
+        coef = self.mag()
+        if coef == 0:
+            print("Vector.normalize() Error: Division by zero.")
             return False
-        return True
+        else:
+            self.coefMult(1 / coef)
+            return True
+
 
     def setMag(self, mag):
         try:
@@ -111,37 +109,41 @@ class Vector:
 
     def heading(self, option=None):
         if self.z != 0:
-            print("Error: Method Vector.heading() can only be used for 2D vectors.")
+            print("Vector.heading() Error: Method can only be used for 2D vectors.")
             return False
         else:
-            try:
-                final = atan2(self.y, self.x)
-                if option == "rad" or option is None:
-                    return final
-                elif option == "deg":
-                    return radToDeg(final)
-            except:
-                print("something went wrong")
-                return False
+            final = atan2(self.y, self.x)
+            if option == "rad" or option is None:
+                return final
+            elif option == "deg":
+                return radToDeg(final)
 
     def setHeading(self, angle):
-        try:
-            m = self.mag()
-            self.x = cos(angle)
-            self.y = sin(angle)
-            self.setMag(m)
-        except:
-            print("something went wrong")
-            return False
+        m = self.mag()
+        self.x = cos(angle)
+        self.y = sin(angle)
+        self.setMag(m)
+
+        return True
+
+    def setHeadingDeg(self, angle):
+        m = self.mag()
+        angle = degToRad(angle)
+        self.x = cos(angle)
+        self.y = sin(angle)
+
         return True
 
     def rotate(self, angle):
-        try:
-            newAngle = self.heading("rad") + angle
-            self.setHeading(newAngle)
-        except:
-            print("something went wrong")
-            return False
+        newAngle = self.heading("rad") + angle
+        self.setHeading(newAngle)
+
+        return True
+
+    def rotateDeg(self,angle):
+        newAngle = self.heading("deg") + angle
+        self.setHeadingDeg(newAngle)
+
         return True
 
     def angleBetween(self, other, option=None):
@@ -154,21 +156,13 @@ class Vector:
             return radToDeg(acos(a / b))
 
     def dist(self, other):
-        try:
-            a = sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2)
-            return sqrt(a ** 2 + fabs(self.z - other.z) ** 2)
-        except:
-            print("something went wrong")
-            return False
+        return sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2 + fabs(self.z - other.z) ** 2)
 
-    def lerp(self, other, amount):
-        try:
-            self.x = self.x + (other.x - self.x) * amount
-            self.y = self.y + (other.y - self.y) * amount
-            self.z = self.z + (other.z - self.z) * amount
-        except:
-            print("something went wrong")
-            return False
+    def lerp(self, other, amt):
+        self.x = self.x + (other.x - self.x) * amt
+        self.y = self.y + (other.y - self.y) * amt
+        self.z = self.z + (other.z - self.z) * amt
+
         return True
 
     def random2D(self):
