@@ -1,11 +1,14 @@
-from math import sqrt,atan2,pi,sin,cos,fabs,acos
+from math import sqrt, atan2, pi, sin, cos, fabs, acos
 from random import random
 
+
 def degToRad(val):
-    return val/180*pi
+    return val / 180 * pi
+
 
 def radToDeg(val):
-    return val/pi*180
+    return val / pi * 180
+
 
 class Vector:
     x = 0
@@ -50,18 +53,18 @@ class Vector:
             return False
         return True
 
-    def dot(self,other):
+    def dot(self, other):
         try:
             a = self.x * other.x
             b = self.y * other.y
             c = self.z * other.z
 
-            return a+b+c
+            return a + b + c
         except:
             print("something went wrong")
             return False
 
-    def cross(self,other):
+    def cross(self, other):
         if self.z == 0 or other.z == 0:
             print("Error: Only works for two 3D Vectors.")
             return False
@@ -106,13 +109,13 @@ class Vector:
             return False
         return True
 
-    def heading(self,option=None):
+    def heading(self, option=None):
         if self.z != 0:
             print("Error: Method Vector.heading() can only be used for 2D vectors.")
             return False
         else:
             try:
-                final = atan2(self.y,self.x)
+                final = atan2(self.y, self.x)
                 if option == "rad" or option is None:
                     return final
                 elif option == "deg":
@@ -121,7 +124,7 @@ class Vector:
                 print("something went wrong")
                 return False
 
-    def setHeading(self,angle):
+    def setHeading(self, angle):
         try:
             m = self.mag()
             self.x = cos(angle)
@@ -132,7 +135,7 @@ class Vector:
             return False
         return True
 
-    def rotate(self,angle):
+    def rotate(self, angle):
         try:
             newAngle = self.heading("rad") + angle
             self.setHeading(newAngle)
@@ -141,24 +144,24 @@ class Vector:
             return False
         return True
 
-    def angleBetween(self,other,option=None):
+    def angleBetween(self, other, option=None):
         a = self.dot(other)
         b = self.mag() * other.mag()
 
         if option is None or option == "rad":
-            return acos(a/b)
+            return acos(a / b)
         elif option == "deg":
-            return radToDeg(acos(a/b))
+            return radToDeg(acos(a / b))
 
-    def dist(self,other):
+    def dist(self, other):
         try:
-            a = sqrt(fabs(self.x-other.x)**2+fabs(self.y-other.y)**2)
-            return sqrt(a**2+fabs(self.z-other.z)**2)
+            a = sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2)
+            return sqrt(a ** 2 + fabs(self.z - other.z) ** 2)
         except:
             print("something went wrong")
             return False
 
-    def lerp(self,other,amount):
+    def lerp(self, other, amount):
         try:
             self.x = self.x + (other.x - self.x) * amount
             self.y = self.y + (other.y - self.y) * amount
@@ -180,7 +183,7 @@ class Vector:
         if minusY > 0.5:
             y = -y
 
-        return Vector(x,y)
+        return Vector(x, y)
 
     def random3D(self):
         minusX = random()
@@ -200,9 +203,9 @@ class Vector:
 
         return Vector(x, y, z)
 
-    def fromAngle(self,angle,length):
+    def fromAngle(self, angle, length):
         try:
-            a = Vector(cos(angle),sin(angle))
+            a = Vector(cos(angle), sin(angle))
             a.setMag(length)
             return a
         except:
