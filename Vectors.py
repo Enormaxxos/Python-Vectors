@@ -107,6 +107,12 @@ class Vector:
             return False
         return True
 
+    def limit(self,max):
+        m = self.mag()
+        if m > max:
+            self.mag(max)
+        return True
+
     def heading(self, option=None):
         if self.z != 0:
             print("Vector.heading() Error: Method can only be used for 2D vectors.")
