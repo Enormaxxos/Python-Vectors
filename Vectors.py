@@ -114,7 +114,7 @@ class Vector:
             return False
         return True
 
-    def limit(self,max):
+    def constrain(self,max):
         m = self.mag()
         if m > max:
             self.setMag(max)
