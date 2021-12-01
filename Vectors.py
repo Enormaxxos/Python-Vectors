@@ -84,6 +84,13 @@ class Vector:
             self.z = self.z / other.z
             return True
 
+    def lerp(self, other, amt):
+        self.x = self.x + (other.x - self.x) * amt
+        self.y = self.y + (other.y - self.y) * amt
+        self.z = self.z + (other.z - self.z) * amt
+
+        return True
+
     def mag(self):
         a = sqrt(self.x ** 2 + self.y ** 2)
         return sqrt(a ** 2 + self.z ** 2)
@@ -110,7 +117,7 @@ class Vector:
     def limit(self,max):
         m = self.mag()
         if m > max:
-            self.mag(max)
+            self.setMag(max)
         return True
 
     def heading(self, option=None):
@@ -163,13 +170,6 @@ class Vector:
 
     def dist(self, other):
         return sqrt(fabs(self.x - other.x) ** 2 + fabs(self.y - other.y) ** 2 + fabs(self.z - other.z) ** 2)
-
-    def lerp(self, other, amt):
-        self.x = self.x + (other.x - self.x) * amt
-        self.y = self.y + (other.y - self.y) * amt
-        self.z = self.z + (other.z - self.z) * amt
-
-        return True
 
     def random2D(self):
         minusX = random()
