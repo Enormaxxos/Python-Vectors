@@ -24,33 +24,22 @@ class Vector:
             self.z = z
 
     def add(self, other):
-        try:
-            self.x += other.x
-            self.y += other.y
-            self.z += other.z
-        except:
-            print("Something went wrong")
-            return False
+        self.x += other.x
+        self.y += other.y
+        self.z += other.z
         return True
 
     def sub(self, other):
-        try:
-            self.x = self.x - other.x
-            self.y = self.y - other.y
-            self.z = self.z - other.z
-        except:
-            print("Something went wrong")
-            return False
+        self.x = self.x - other.x
+        self.y = self.y - other.y
+        self.z = self.z - other.z
         return True
 
     def coefMult(self, coef):
-        try:
-            self.x = self.x * coef
-            self.y = self.y * coef
-            self.z = self.z * coef
-        except:
-            print("Something went wrong")
-            return False
+        self.x = self.x * coef
+        self.y = self.y * coef
+        self.z = self.z * coef
+
         return True
 
     def dot(self, other):
@@ -65,14 +54,10 @@ class Vector:
             return False
 
     def cross(self, other):
-        if self.z == 0 or other.z == 0:
-            print("Vector.cross() Error: Only works for two 3D Vectors.")
-            return False
-        else:
-            a = self.y * other.z - self.z * other.y
-            b = self.z * other.x - other.z * self.x
-            c = self.x * other.y - self.y * other.x
-            return Vector(a, b, c)
+        a = self.y * other.z - self.z * other.y
+        b = self.z * other.x - other.z * self.x
+        c = self.x * other.y - self.y * other.x
+        return Vector(a, b, c)
 
     def div(self, other):
         if other.x == 0 or other.y == 0 or other.z == 0:
