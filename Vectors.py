@@ -196,3 +196,6 @@ class Vector:
         except:
             print("something went wrong")
             return False
+
+    def toString(self):
+        return f"x:{self.x}, y:{self.y}, z:{self.z}"
