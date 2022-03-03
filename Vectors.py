@@ -16,11 +16,11 @@ class Vector:
     z = 0
 
     def __init__(self, x=None, y=None, z=None):
-        if x is not None:
+        if x is not None and isinstance(x, int):
             self.x = x
-        if y is not None:
+        if y is not None and isinstance(x, int):
             self.y = y
-        if z is not None:
+        if z is not None and isinstance(x, int):
             self.z = z
 
     def add(self, other):
@@ -43,15 +43,11 @@ class Vector:
         return True
 
     def dot(self, other):
-        try:
-            a = self.x * other.x
-            b = self.y * other.y
-            c = self.z * other.z
+        a = self.x * other.x
+        b = self.y * other.y
+        c = self.z * other.z
 
-            return a + b + c
-        except:
-            print("something went wrong")
-            return False
+        return a + b + c
 
     def cross(self, other):
         a = self.y * other.z - self.z * other.y
@@ -91,12 +87,8 @@ class Vector:
 
 
     def setMag(self, mag):
-        try:
-            self.normalize()
-            self.coefMult(mag)
-        except:
-            print("something went wrong")
-            return False
+        self.normalize()
+        self.coefMult(mag)
         return True
 
     def constrain(self,max):
